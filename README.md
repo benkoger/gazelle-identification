@@ -14,7 +14,7 @@ Automated individual gazelle identification
 
    - What you ultimately want is a folder containing the raw images and, within that, a second folder call *annotations* with the .xml annotation       files for some subset of the raw images in PASCAL VOC format.
    
-2. Once you have the annotated data, we are going retrain a pretrained tensorflow model as described [here](https://github.com/tensorflow/models/blob/master/object_detection/g3doc/running_locally.md).  
+2. Once you have the annotated data, we are going prepate to retrain a pretrained tensorflow model as described [here](https://github.com/tensorflow/models/blob/master/object_detection/g3doc/running_locally.md).  
    - As described in the link, we ultimately want to get our relevant directories and files in the following form:
      ```
       +data
@@ -95,11 +95,85 @@ Automated individual gazelle identification
       # Copy edited template to cloud.
       gsutil cp object_detection/samples/configs/faster_rcnn_resnet101_pets.config \
           gs://${YOUR_GCS_BUCKET}/data/faster_rcnn_resnet101_pets.config
+         
       ```
-     
-     
-     
+3. Once all of the files are all set as described above, you are ready to train the network.  The details for training the network are directly copied from [here](https://github.com/tensorflow/models/blob/master/object_detection/g3doc/running_locally.md).
 
+- **Running the Training Job**
+
+   A local training job can be run with the following command:
+
+   ```bash
+   # From the tensorflow/models/ directory
+   python object_detection/train.py \
+       --logtostderr \
+       --pipeline_config_path=${PATH_TO_YOUR_PIPELINE_CONFIG} \
+       --train_dir=${PATH_TO_TRAIN_DIR}
+   ```
+
+   where `${PATH_TO_YOUR_PIPELINE_CONFIG}` points to the pipeline config and
+   `${PATH_TO_TRAIN_DIR}` points to the directory in which training checkpoints
+   and events will be written to. By default, the training job will
+   run indefinitely until the user kills it.
+
+- **Running the Evaluation Job**
+
+   Evaluation is run as a separate job. The eval job will periodically poll the
+   train directory for new checkpoints and evaluate them on a test dataset. The
+   job can be run using the following command:
+
+   ```bash
+   # From the tensorflow/models/ directory
+   python object_detection/eval.py \
+       --logtostderr \
+       --pipeline_config_path=${PATH_TO_YOUR_PIPELINE_CONFIG} \
+       --checkpoint_dir=${PATH_TO_TRAIN_DIR} \
+       --eval_dir=${PATH_TO_EVAL_DIR}
+   ```
+
+   where `${PATH_TO_YOUR_PIPELINE_CONFIG}` points to the pipeline config,
+   `${PATH_TO_TRAIN_DIR}` points to the directory in which training checkpoints
+   were saved (same as the training job) and `${PATH_TO_EVAL_DIR}` points to the
+   directory in which evaluation events will be saved. As with the training job,
+   the eval job run until terminated by default.
+
+- **Running Tensorboard**
+
+   Progress for training and eval jobs can be inspected using Tensorboard. If
+   using the recommended directory structure, Tensorboard can be run using the
+   following command:
+
+   ```bash
+   tensorboard --logdir=${PATH_TO_MODEL_DIRECTORY}
+   ```
+
+   where `${PATH_TO_MODEL_DIRECTORY}` points to the directory that contains the
+   train and eval directories. Please note it may take Tensorboard a couple minutes
+   to populate with data.
+     
+4. Now that the model is trained, you need to export the model so that it can be used other places.  This is discussed in    
+detail [here](https://github.com/tensorflow/models/blob/master/object_detection/g3doc/exporting_models.md).
+
+   Run the following:
+   ```
+   # From within tensorflow/models
+   python object_detection/export_inference_graph.py \
+       --input_type image_tensor \
+       --pipeline_config_path ${PIPELINE_CONFIG_PATH} \
+       --checkpoint_path ${PATH}model.ckpt-${CHECKPOINT_NUMBER} \
+       --inference_graph_path output_inference_graph.pb
+   ```
+   
+5. Now you can use your saved model to extract the gazelle face images from the raw images.  This is done with [extract_gazelle_heads.py](https://github.com/benkoger/gazelle-identification/blob/master/extract_gazelle_heads.py).
+   
+   You just need to change PATH_TO_CKPT, PATH_TO_LABELS, NUM_CLASSES, and PATH_TO_IMAGES_DIR to apropriate values for your    computer.
+     
+     
+### Individual Recognition
+
+1. [Simply follow this tutorial for retraining a classification network.](https://www.tensorflow.org/tutorials/image_retraining)
+
+2. Use [use_retrained_inception.ipynb](https://github.com/benkoger/gazelle-identification/blob/master/use_retrained_inception.ipynb) to classify new images.  See [this](https://www.tensorflow.org/tutorials/image_recognition) tutorial for a detailed general description.
 
         
       
