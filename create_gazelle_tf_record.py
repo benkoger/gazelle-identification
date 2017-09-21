@@ -11,9 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+#Modified by Ben Koger
 # ==============================================================================
 
-r"""Convert the Oxford pet dataset to TFRecord for object_detection.
+"""Convert gazelle dataset to TFRecord for object_detection.
 
 See: O. M. Parkhi, A. Vedaldi, A. Zisserman, C. V. Jawahar
      Cats and Dogs
@@ -21,8 +23,8 @@ See: O. M. Parkhi, A. Vedaldi, A. Zisserman, C. V. Jawahar
      http://www.robots.ox.ac.uk/~vgg/data/pets/
 
 Example usage:
-    ./create_pet_tf_record --data_dir=/home/user/pet \
-        --output_dir=/home/user/pet/output
+    ./create_gazelle_tf_record --data_dir=/home/user/gazelle \
+        --output_dir=/home/user/gazelle/output
 """
 
 import hashlib
