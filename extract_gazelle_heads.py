@@ -46,12 +46,12 @@ class ExtractGazelleHeads():
 
     # Path to frozen detection graph. This is the actual model 
     #that is used for the object detection.
-    PATH_TO_CKPT = '/home/golden/Projects/gazelle_identification/oxford_pet/models/model/pets_test_graph.pb' 
+    PATH_TO_CKPT = '/home/golden/Projects/gazelle_identification/gazelle/output_graph.pb' 
 
     # List of the strings that is used to add correct label for each box.
-    PATH_TO_LABELS = '/home/golden/Projects/gazelle_identification/oxford_pet/data/pet_label_map.pbtxt'
+    PATH_TO_LABELS = '/home/golden/Projects/gazelle_identification/gazelle/data/gazelle_head_label_map.pbtxt'
 
-    NUM_CLASSES = 37
+    NUM_CLASSES = 2
 
     #Create folder for extracted images
     PATH_TO_EXTRACTED_IMAGES = 'data/extracted/test/'
