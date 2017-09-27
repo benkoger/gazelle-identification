@@ -4,9 +4,12 @@ Automated individual gazelle identification
 ![alt text](https://puxccbo05z-flywheel.netdna-ssl.com/wp-content/uploads/2015/02/thomsons-gazelle-2.jpg)
 
 ## Description of the full pipeline for recognition and classification problems
+
+For some tensorflow object detection background, start [here](https://research.googleblog.com/2017/06/supercharge-your-computer-vision-models.html).
+
 ### Extracting Gazelle heads
 
-[This](https://github.com/tensorflow/models/blob/master/object_detection/g3doc/running_pets.md) blog post from tensorflow is an example that learns pet localization.  The following is basically just the nessasary changes so that it runs on the gazelle data set.  Use this for info on getting the general environment set up.
+[This](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_pets.md) blog post from tensorflow is an example that learns pet localization.  The following is basically just the nessasary changes so that it runs on the gazelle data set.  Use this for info on getting the general environment set up.
 
 1. You need annotated training images with bounding boxes around the object you want to extract and ultimately classify.
 
@@ -14,7 +17,7 @@ Automated individual gazelle identification
 
    - What you ultimately want is a folder containing the raw images and, within that, a second folder call *annotations* with the .xml annotation       files for some subset of the raw images in PASCAL VOC format.
    
-2. Once you have the annotated data, we are going prepate to retrain a pretrained tensorflow model as described [here](https://github.com/tensorflow/models/blob/master/object_detection/g3doc/running_locally.md).  
+2. Once you have the annotated data, we are going prepate to retrain a pretrained tensorflow model as described [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md).  
    - As described in the link, we ultimately want to get our relevant directories and files in the following form:
      ```
       +data
@@ -46,7 +49,7 @@ Automated individual gazelle identification
       
       **train/test TFRECORD file**
       
-      I modified [this](https://github.com/tensorflow/models/blob/master/object_detection/create_pascal_tf_record.py) program
+      I modified [this](https://github.com/tensorflow/models/blob/master/research/object_detection/create_pascal_tf_record.py) program
       to work with the way my data is annotated.  The result is [create_gazelle_tf_record.py](https://github.com/benkoger/gazelle-identification/blob/master/create_gazelle_tf_record.py) 
       
       It can be run as follows:
@@ -70,7 +73,7 @@ Automated individual gazelle identification
      
       In the Tensorflow Object Detection API, the model parameters, training
       parameters and eval parameters are all defined by a config file. More details
-      can be found [here](https://github.com/tensorflow/models/blob/master/object_detection/g3doc/configuring_jobs.md). For this tutorial, we will use some
+      can be found [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md). For this tutorial, we will use some
       predefined templates provided with the source code. In the
       `object_detection/samples/configs` folder, there are skeleton object_detection
       configuration files. We will use `faster_rcnn_resnet101_pets.config` as a
@@ -97,7 +100,7 @@ Automated individual gazelle identification
           gs://${YOUR_GCS_BUCKET}/data/faster_rcnn_resnet101_pets.config
          
       ```
-3. Once all of the files are all set as described above, you are ready to train the network.  The details for training the network are directly copied from [here](https://github.com/tensorflow/models/blob/master/object_detection/g3doc/running_locally.md).
+3. Once all of the files are all set as described above, you are ready to train the network.  The details for training the network are directly copied from [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md).
 
 - **Running the Training Job**
 
@@ -152,7 +155,7 @@ Automated individual gazelle identification
    to populate with data.
      
 4. Now that the model is trained, you need to export the model so that it can be used other places.  This is discussed in    
-detail [here](https://github.com/tensorflow/models/blob/master/object_detection/g3doc/exporting_models.md).
+detail [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/exporting_models.md).
 
    Run the following:
    ```
