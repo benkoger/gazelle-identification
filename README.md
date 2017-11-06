@@ -172,7 +172,7 @@ detail [here](https://github.com/tensorflow/models/blob/master/research/object_d
    You just need to change PATH_TO_CKPT, PATH_TO_LABELS, NUM_CLASSES, and PATH_TO_IMAGES_DIR to apropriate values for your    computer.
    
    If all went well you will have a folder full of gazelle faces like this:
-   ![alt text](https://puxccbo05z-flywheel.netdna-ssl.com/wp-content/uploads/2015/02/thomsons-gazelle-2.jpg)
+   ![alt text](/extracted_gazelle_heads.png)
   
      
      
@@ -181,6 +181,8 @@ detail [here](https://github.com/tensorflow/models/blob/master/research/object_d
 1. [Simply follow this tutorial for retraining a classification network.](https://www.tensorflow.org/tutorials/image_retraining)
 
 2. Use [use_retrained_inception.ipynb](https://github.com/benkoger/gazelle-identification/blob/master/use_retrained_inception.ipynb) to classify new images.  See [this](https://www.tensorflow.org/tutorials/image_recognition) tutorial for a detailed general description.
+
+![alt text](/individual_gazelles_heads.png)
 
         
       
