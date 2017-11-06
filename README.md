@@ -170,6 +170,10 @@ detail [here](https://github.com/tensorflow/models/blob/master/research/object_d
 5. Now you can use your saved model to extract the gazelle face images from the raw images.  This is done with [extract_gazelle_heads.py](https://github.com/benkoger/gazelle-identification/blob/master/extract_gazelle_heads.py).
    
    You just need to change PATH_TO_CKPT, PATH_TO_LABELS, NUM_CLASSES, and PATH_TO_IMAGES_DIR to apropriate values for your    computer.
+   
+   If all went well you will have a folder full of gazelle faces like this:
+   ![alt text](https://puxccbo05z-flywheel.netdna-ssl.com/wp-content/uploads/2015/02/thomsons-gazelle-2.jpg)
+  
      
      
 ### Individual Recognition
