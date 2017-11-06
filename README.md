@@ -62,7 +62,7 @@ For some tensorflow object detection background, start [here](https://research.g
       
       - **trainval.txt**
       
-        trainval.txt can be created with [create_train_val.py](https://github.com/benkoger/gazelle-identification/blob/master/create_train_val.py).  This file is just a list of the names of all the images that you want to   
+        trainval.txt can be created with [create_train_val.py](https://github.com/benkoger/gazelle-identification/blob/master/create_train_val.py).  The resulting file is just a list of the names of all the images that you want to   
         use for training with the file extension removed.  Therefore it's easist to run the following:
         ```
         ./create_train_val --data_dir='path to annotaions' 
