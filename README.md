@@ -13,7 +13,7 @@ For some tensorflow object detection background, start [here](https://research.g
 
 1. You need annotated training images with bounding boxes around the object you want to extract and ultimately classify.
 
-   - The easist way I have found to do this is with the app called [RectLabel](https://itunes.apple.com/us/app/rectlabel-labeling-images-for-object-detection/id1210181730?mt=12).  I think it is unfourtunately only avaiable for mac.
+   - The easist way I have found to do this is with the app called [RectLabel](https://itunes.apple.com/us/app/rectlabel-labeling-images-for-object-detection/id1210181730?mt=12).  I think it is only avaiable for mac.
 
    - What you ultimately want is a folder containing the raw images and, within that, a second folder call *annotations* with the .xml annotation       files for some subset of the raw images in PASCAL VOC format.
    
