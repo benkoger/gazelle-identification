@@ -74,9 +74,7 @@ For some tensorflow object detection background, start [here](https://research.g
       In the Tensorflow Object Detection API, the model parameters, training
       parameters and eval parameters are all defined by a config file. More details
       can be found [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md). For this tutorial, we will use some
-      predefined templates provided with the source code. In the
-      `object_detection/samples/configs` folder, there are skeleton object_detection
-      configuration files. We will use `faster_rcnn_resnet101_pets.config` as a
+      predefined templates provided with the source code. The tensorflow model zoo can be found [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md). We will use `faster_rcnn_resnet101_pets.config` as a
       starting point for configuring the pipeline. Open the file with your favourite
       text editor.
 
