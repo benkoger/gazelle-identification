@@ -75,10 +75,10 @@ For some tensorflow object detection background, start [here](https://research.g
       parameters and eval parameters are all defined by a config file. More details
       can be found [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md). For this tutorial, we will use some
       predefined templates provided with the source code. The tensorflow model zoo can be found [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md). We will use `faster_rcnn_resnet101_pets.config` as a
-      starting point for configuring the pipeline. Open the file with your favourite
+      starting point for configuring the pipeline. Open the file with a
       text editor.
 
-      We'll need to configure some paths in order for the template to work. Search the
+      We need to configure some paths in order for the template to work. Search the
       file for instances of `PATH_TO_BE_CONFIGURED` and replace them with the
       appropriate value (typically `gs://${YOUR_GCS_BUCKET}/data/`). Afterwards
       upload your edited file onto GCS, making note of the path it was uploaded to
