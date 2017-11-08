@@ -106,7 +106,7 @@ For some tensorflow object detection background, start [here](https://research.g
 
    ```bash
    # From the tensorflow/models/research/ directory
-   python object_detection/train.py \
+   CUDA_VISIBLE_DEVICES=0 python object_detection/train.py \
        --logtostderr \
        --pipeline_config_path=${PATH_TO_YOUR_PIPELINE_CONFIG} \
        --train_dir=${PATH_TO_TRAIN_DIR}
@@ -125,7 +125,7 @@ For some tensorflow object detection background, start [here](https://research.g
 
    ```bash
    # From the tensorflow/models/research/ directory
-   python object_detection/eval.py \
+   CUDA_VISIBLE_DEVICES=1 python object_detection/eval.py \
        --logtostderr \
        --pipeline_config_path=${PATH_TO_YOUR_PIPELINE_CONFIG} \
        --checkpoint_dir=${PATH_TO_TRAIN_DIR} \
