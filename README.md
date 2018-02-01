@@ -1,8 +1,8 @@
 ![alt text](https://github.com/benkoger/gazelle-identification/blob/master/loopy_compatible.png)
 
-<p align="center">
+
 ## While the example of gazelle face recognition is used, this approach can sucessfully be used for many different applications.
-</p>
+
 
 # gazelle-identification
 Automated individual gazelle identification
