@@ -1,3 +1,5 @@
+![alt text](https://github.com/benkoger/gazelle-identification/blob/master/loopy_compatible.png)
+
 # gazelle-identification
 Automated individual gazelle identification
 
