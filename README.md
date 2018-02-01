@@ -1,5 +1,7 @@
 ![alt text](https://github.com/benkoger/gazelle-identification/blob/master/loopy_compatible.png)
 
+# While the example of gazelle face recognition is used, this approach can sucessfully be used for many different applications.
+
 # gazelle-identification
 Automated individual gazelle identification
 
@@ -15,12 +17,14 @@ For some tensorflow object detection background, start [here](https://research.g
 
 1. You need annotated training images with bounding boxes around the object you want to extract and ultimately classify.
 
-   - The easist way I have found to do this is with the app called [RectLabel](https://itunes.apple.com/us/app/rectlabel-labeling-images-for-object-detection/id1210181730?mt=12).  I think it is only avaiable for mac.
+   - If you are using [Loopy](loopbio.com/loopy/), then you can use the [loopy_to_PASCALVOC.ipynb](https://github.com/benkoger/gazelle-identification/blob/master/loopy_to_PASCALVOC.ipynb) notebook to convert the loopy annotation files to the .xml files that the TensorFlow object detection api uses as default. 
+
+   - The easist way I have found outside of Loopy to do this is with the app called [RectLabel](https://itunes.apple.com/us/app/rectlabel-labeling-images-for-object-detection/id1210181730?mt=12).  I think it is only avaiable for mac.
 
    - What you ultimately want is a folder containing the raw images and, within that, a second folder call *annotations* with the .xml annotation       files for some subset of the raw images in PASCAL VOC format.
    
-2. Once you have the annotated data, we are going prepate to retrain a pretrained tensorflow model as described [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md).  
-   - As described in the link, we ultimately want to get our relevant directories and files in the following form:
+2. Once you have the annotated data, you must prepare to retrain a pretrained tensorflow model as described [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md).  
+   - As described in the link, you ultimately want to get your relevant directories and files in the following form:
      ```
       +data
         -label_map file
@@ -32,11 +36,11 @@ For some tensorflow object detection background, start [here](https://research.g
           +train
           +eval
       ```
-      First, we need to create the all the nessesary files:
+      First, you need to create all the nessesary files:
       
        **label_map**
       
-      label_map is a .pbtxt file which describes the object classes.  In this, the simplest case, we only have two classes: gazelle head; not gazelle head.  This is the corresponding label_map file:
+      label_map is a .pbtxt file which describes the object classes.  In this, the simplest case, you only have two classes: gazelle head; not gazelle head.  This is the corresponding label_map file:
       ```
       item {
         id: 0
@@ -60,7 +64,7 @@ For some tensorflow object detection background, start [here](https://research.g
       ./create_gazelle_tf_record --data_dir='path to images' \
         --output_dir='path to output' --label_map_path='path to label_map'
       ```
-      **n.b.**  The program assumes that the folder of all the raw images that *data_dir* leads to contains both a folder called *annotations* which contains all the .xml annotaions (as described above) and a file called *trainval.txt* which we create below. 
+      **n.b.**  The program assumes that the folder of all the raw images that *data_dir* leads to contains both a folder called *annotations* which contains all the .xml annotaions (as described above) and a file called *trainval.txt* which you create below. 
       
       - **trainval.txt**
       
@@ -75,16 +79,16 @@ For some tensorflow object detection background, start [here](https://research.g
      
       In the Tensorflow Object Detection API, the model parameters, training
       parameters and eval parameters are all defined by a config file. More details
-      can be found [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md). For this tutorial, we will use some
-      predefined templates provided with the source code. The skeleton graph config files can be found in the models/research/object_detection/samples/configs folder.  The tensorflow model zoo from which you can get the files assosiated with the pretrained graphs can be found [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md). We will use `faster_rcnn_resnet101_pets.config` as a
+      can be found [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md). For this tutorial, you will use some
+      predefined templates provided with the source code. The skeleton graph config files can be found in the models/research/object_detection/samples/configs folder.  The tensorflow model zoo from which you can get the files assosiated with the pretrained graphs can be found [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md). I use `faster_rcnn_resnet101_pets.config` as a
       starting point for configuring the pipeline. Open the file with a
       text editor.
 
-      We need to configure some paths in order for the template to work. Search the
+      You need to configure some paths in order for the template to work. Search the
       file for instances of `PATH_TO_BE_CONFIGURED` and replace them with the
       appropriate value (typically `gs://${YOUR_GCS_BUCKET}/data/`). Afterwards
       upload your edited file onto GCS, making note of the path it was uploaded to
-      (we'll need it when starting the training/eval jobs).
+      (you'll need it when starting the training/eval jobs).
 
       ``` 
       bash
@@ -100,6 +104,19 @@ For some tensorflow object detection background, start [here](https://research.g
           gs://${YOUR_GCS_BUCKET}/data/faster_rcnn_resnet101_pets.config
          
       ```
+      
+      You can also choose to add some data augmentation to the training set.  Possible augmentation techniques are described [here](https://github.com/tensorflow/models/blob/master/research/object_detection/protos/preprocessor.proto).  
+      
+      Like this:
+      ```
+       data_augmentation_options {
+          random_horizontal_flip {
+          }
+          random_vertical_flip {
+          }
+       }
+      ```
+      
 3. Once all of the files are all set as described above, you are ready to train the network.  The details for training the network are directly copied from [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md).
 
 - **Running the Training Job**
@@ -123,7 +140,7 @@ For some tensorflow object detection background, start [here](https://research.g
 
    Evaluation is run as a separate job. The eval job will periodically poll the
    train directory for new checkpoints and evaluate them on a test dataset. The
-   job can be run using the following command:
+   job can be run using the following command (this assumes you have two GPUs otherwise see [here](https://github.com/tensorflow/models/issues/1854) for more info):
 
    ```bash
    # From the tensorflow/models/research/ directory
@@ -159,12 +176,12 @@ detail [here](https://github.com/tensorflow/models/blob/master/research/object_d
 
    Run the following:
    ```
-   # From within tensorflow/models
+   # From tensorflow/models/research/
    python object_detection/export_inference_graph.py \
        --input_type image_tensor \
        --pipeline_config_path ${PIPELINE_CONFIG_PATH} \
-       --checkpoint_path ${PATH}model.ckpt-${CHECKPOINT_NUMBER} \
-       --inference_graph_path output_inference_graph.pb
+       --trained_checkpoint_prefix ${PATH}model.ckpt-${CHECKPOINT_NUMBER} \
+       --output_directory output_inference_graph.pb
    ```
    
 5. Now you can use your saved model to extract the gazelle face images from the raw images.  This is done with [extract_gazelle_heads.py](https://github.com/benkoger/gazelle-identification/blob/master/extract_gazelle_heads.py).
