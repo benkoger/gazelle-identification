@@ -1,7 +1,7 @@
 ![alt text](https://github.com/benkoger/gazelle-identification/blob/master/loopy_compatible.png)
 
 
-## While the example of gazelle face recognition is used, this approach can sucessfully be used for many different applications.
+### While the example of gazelle face recognition is used, this approach can sucessfully be used for many different applications.
 
 
 # gazelle-identification
