@@ -226,7 +226,7 @@ changed:
 ...
 
 pascal_metrics['precisions_per_class'] = precisions_per_class
-pascal_matrics['recalls_per_class'] = recalls_per_class
+pascal_metrics['recalls_per_class'] = recalls_per_class
 
 ```
 
