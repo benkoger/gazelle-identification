@@ -230,6 +230,15 @@ pascal_matrics['recalls_per_class'] = recalls_per_class
 
 ```
 
+object_detection/eval_util.py
+
+
+added in def repeated_checkpoint_run(tensor_dict,... ln293:
+```
+      np.save(os.path.join(summary_dir, 'precisions_' + str(global_step)), metrics['precisions_per_class'])
+      np.save(os.path.join(summary_dir, 'recalls_' + str(global_step)), metrics['recalls_per_class'])
+```
+
         
       
       
