@@ -203,6 +203,32 @@ detail [here](https://github.com/tensorflow/models/blob/master/research/object_d
 
 ![alt text](/individual_gazelles_heads.png)
 
+
+
+###Things that I have changed in the object detection API (not a complete list)
+
+Feb 13, 2018:
+1. To generate precision recall curves
+
+https://github.com/tensorflow/models/blob/master/research/object_detection/utils/object_detection_evaluation.py
+original:
+
+```
+(per_class_ap, mean_ap, _, _, per_class_corloc, mean_corloc) = (
+        self._evaluation.evaluate())
+
+```
+changed:
+```
+(per_class_ap, mean_ap, precisions_per_class, reacalls_per_class, per_class_corloc, mean_corloc) = (
+        self._evaluation.evaluate())
+...
+
+pascal_metrics['precisions_per_class'] = precisions_per_class
+pascal_matrics['recalls_per_class'] = recalls_per_class
+
+```
+
         
       
       
